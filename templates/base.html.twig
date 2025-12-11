@@ -22,9 +22,9 @@
     {% block header %}
       {% if app.user %}
         <a href="{{ path('app_logout') }}">logout</a>
+      {% else %}
+        <a href="{{ path('app_login') }}">login</a>
       {% endif %}
-
-      <a href="{{ path('app_login') }}">login</a>
     {% endblock %}
     {% block body %}
 
