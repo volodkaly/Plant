@@ -29,6 +29,15 @@ class Plant
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
     private ?array $fertilizers = null;
 
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTime $lastWateringDate = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $height = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -93,4 +102,57 @@ class Plant
 
         return $this;
     }
+
+    public function getLastWateringDate(): ?\DateTime
+    {
+        return $this->lastWateringDate;
+    }
+
+    public function setLastWateringDate(?\DateTime $lastWateringDate): static
+    {
+        $this->lastWateringDate = $lastWateringDate;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getHeight(): ?int
+    {
+        return $this->height;
+    }
+
+    public function setHeight(?int $height): static
+    {
+        $this->height = $height;
+
+        return $this;
+    }
+
+    public function getNextWatering(): string
+    {
+        $today = new \DateTime();
+        $last = $this->lastWateringDate ?? $this->createdAt;
+
+        $minNext = (clone $last)->modify('+' . $this->getMinNumberOfDaysToWater() . ' days');
+        $maxNext = (clone $last)->modify('+' . $this->getMaxNumberOfDaysToWater() . ' days');
+        if ($maxNext < $today) {
+            return 'вже';
+        }
+        $minDiff = max(0, $today->diff($minNext)->days);
+        $maxDiff = $today->diff($maxNext)->days;
+
+        return "$minDiff - $maxDiff";
+    }
+
 }

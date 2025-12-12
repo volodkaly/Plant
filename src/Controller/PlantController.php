@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Plant;
 use App\Form\PlantType;
 use App\Repository\PlantRepository;
+use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,8 +32,11 @@ final class PlantController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $plant->setCreatedAt(new DateTimeImmutable());
             $entityManager->persist($plant);
             $entityManager->flush();
+
+
 
             return $this->redirectToRoute('app_plant_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -71,7 +76,7 @@ final class PlantController extends AbstractController
     #[Route('/{id}', name: 'app_plant_delete', methods: ['POST'])]
     public function delete(Request $request, Plant $plant, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$plant->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $plant->getId(), $request->getPayload()->getString('_token'))) {
             $entityManager->remove($plant);
             $entityManager->flush();
         }
