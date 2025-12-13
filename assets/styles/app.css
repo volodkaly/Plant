@@ -1,3 +1,12 @@
 body {
-    background-color: skyblue;
+  background-color: skyblue;
+}
+
+a:active {
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
