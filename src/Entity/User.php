@@ -9,7 +9,6 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\HasLifecycleCallbacks]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -114,18 +113,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-
-
-    #[ORM\PrePersist]
-    #[ORM\PreUpdate]
-    public function hashPassword(): void
-    {
-        if (!$this->password || password_get_info($this->password)['algo'] !== 0) {
-            return;
-        }
-
-        $this->password = password_hash($this->password, PASSWORD_BCRYPT);
-    }
 
     /**
      * Ensure the session doesn't contain actual password hashes by CRC32C-hashing them, as supported since Symfony 7.3.
