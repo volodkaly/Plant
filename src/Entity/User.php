@@ -22,6 +22,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $customRole = null;
     /**
      * @var list<string> The user roles
      */
@@ -59,6 +61,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
+    }
+
+    public function setCustomRole(?string $customRole): ?string
+    {
+        $customRole = $this->customRole;
+
+        return $customRole;
+    }
+
+    public function getCustomRole(): string
+    {
+        return $this->customRole;
+
     }
 
     /**
@@ -104,7 +119,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __serialize(): array
     {
         $data = (array) $this;
-        $data["\0".self::class."\0password"] = hash('crc32c', $this->password);
+        $data["\0" . self::class . "\0password"] = hash('crc32c', $this->password);
 
         return $data;
     }
