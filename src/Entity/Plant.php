@@ -42,7 +42,12 @@ class Plant
 
     #[ORM\Column(nullable: true)]
     #[Assert\PositiveOrZero]
+    #[Assert\LessThan(20000)]
     private ?int $height = null;
+
+    #[ORM\Column]
+    #[Assert\PositiveOrZero]
+    private ?int $volumeOfWaterInMLperCMofHeight = null;
 
     public function getId(): ?int
     {
@@ -146,6 +151,21 @@ class Plant
         return $this;
     }
 
+    public function getMaxDaysTillNextWatering(): int
+    {
+        $today = new \DateTime();
+        $last = $this->lastWateringDate ?? $this->createdAt;
+
+        $maxNext = (clone $last)->modify('+' . $this->getMaxNumberOfDaysToWater() . ' days');
+        if ($maxNext < $today) {
+            return 0;
+        }
+
+        $maxDiff = $today->diff($maxNext)->days;
+        return (int) $maxDiff;
+
+    }
+
     public function getNextWatering(): string
     {
         $today = new \DateTime();
@@ -160,6 +180,23 @@ class Plant
         $maxDiff = $today->diff($maxNext)->days;
 
         return "$minDiff - $maxDiff";
+    }
+
+    public function getVolumeOfWaterInMLperCMofHeight(): ?int
+    {
+        return $this->volumeOfWaterInMLperCMofHeight;
+    }
+
+    public function setVolumeOfWaterInMLperCMofHeight(int $volumeOfWaterInMLperCMofHeight): static
+    {
+        $this->volumeOfWaterInMLperCMofHeight = $volumeOfWaterInMLperCMofHeight;
+
+        return $this;
+    }
+
+    public function getVolumeOfWaterInML(): ?int
+    {
+        return ($this->getVolumeOfWaterInMLperCMofHeight()) * ($this->getHeight());
     }
 
 }

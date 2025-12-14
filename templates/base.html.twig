@@ -22,9 +22,9 @@
   <body>
     {% block header %}
       {% if app.user %}
-        <a href="{{ path('app_logout') }}" class="btn btn-info mt-4 ms-4">logout</a>
+        <a href="{{ path('app_logout') }}" class="btn btn-primary mt-4 ms-4">logout</a>
       {% else %}
-        <a href="{{ path('app_login') }}" class="btn btn-info mt-4 ms-4">login</a>
+        <a href="{{ path('app_login') }}" class="btn btn-primary mt-4 ms-4">login</a>
       {% endif %}
     {% endblock %}
     {% block body %}

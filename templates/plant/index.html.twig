@@ -11,7 +11,10 @@
         <tr>
           <th>Id</th>
           <th>Name</th>
+          <th>Max days till next watering</th>
           <th>Days till next watering</th>
+          <th>Water volume</th>
+          <th>Last watering date</th>
           <th>Description</th>
           <th>Min watering frequency</th>
           <th>Max watering frequency</th>
@@ -26,7 +29,10 @@
           <tr>
             <td>{{ plant.id }}</td>
             <td>{{ plant.name }}</td>
+            <td style="background: {{ plant.getMaxDaysTillNextWatering == 0 ? 'red' : plant.getMaxDaysTillNextWatering <= 2 ? 'orange' : 'green' }};">{{ plant.getMaxDaysTillNextWatering }}</td>
             <td>{{ plant.getNextWatering }}</td>
+            <td>{{ plant.getVolumeOfWaterInML }}</td>
+            <td>{{ plant.lastWateringDate|date('d.m.Y') }}</td>
             <td>{{ plant.description }}</td>
             <td>{{ plant.minNumberOfDaysToWater }}</td>
             <td>{{ plant.maxNumberOfDaysToWater }}</td>
@@ -47,5 +53,5 @@
     </table>
   </div>
 
-  <a href="{{ path('app_plant_new') }}" class="btn btn-info ms-4">Create new</a>
+  <a href="{{ path('app_plant_new') }}" class="btn btn-primary ms-4">Create new</a>
 {% endblock %}

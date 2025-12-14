@@ -5,40 +5,49 @@
 {% endblock %}
 
 {% block body %}
-  <h1>Plant</h1>
+  <div class="container">
+    <h1>Plant</h1>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th>Id</th>
+          <td>{{ plant.id }}</td>
+        </tr>
+        <tr>
+          <th>Name</th>
+          <td>{{ plant.name }}</td>
+        </tr>
+        <tr>
+          <th>Days till next watering</th>
+          <td>{{ plant.getNextWatering }}</td>
+        </tr>
+        <tr>
+          <th>Date of last watering</th>
+          <td>{{ plant.lastWateringDate|date('d.m.Y') }}</td>
+        </tr>
+        <tr>
+          <th>Description</th>
+          <td>{{ plant.description }}</td>
+        </tr>
+        <tr>
+          <th>MinNumberOfDaysToWater</th>
+          <td>{{ plant.minNumberOfDaysToWater }}</td>
+        </tr>
+        <tr>
+          <th>MaxNumberOfDaysToWater</th>
+          <td>{{ plant.maxNumberOfDaysToWater }}</td>
+        </tr>
+        <tr>
+          <th>Fertilizers</th>
+          <td>{{ plant.fertilizers|join('') }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-  <table class="table">
-    <tbody>
-      <tr>
-        <th>Id</th>
-        <td>{{ plant.id }}</td>
-      </tr>
-      <tr>
-        <th>Name</th>
-        <td>{{ plant.name }}</td>
-      </tr>
-      <tr>
-        <th>Description</th>
-        <td>{{ plant.description }}</td>
-      </tr>
-      <tr>
-        <th>MinNumberOfDaysToWater</th>
-        <td>{{ plant.minNumberOfDaysToWater }}</td>
-      </tr>
-      <tr>
-        <th>MaxNumberOfDaysToWater</th>
-        <td>{{ plant.maxNumberOfDaysToWater }}</td>
-      </tr>
-      <tr>
-        <th>Fertilizers</th>
-        <td>{{ plant.fertilizers|join('') }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <a href="{{ path('app_plant_index') }}" class="btn btn-primary m-4">back to list</a>
 
-  <a href="{{ path('app_plant_index') }}">back to list</a>
-
-  <a href="{{ path('app_plant_edit', { id: plant.id }) }}">edit</a>
+  <a href="{{ path('app_plant_edit', { id: plant.id }) }}" class="btn btn-primary">edit</a>
 
   {{ include('plant/_delete_form.html.twig') }}
 {% endblock %}

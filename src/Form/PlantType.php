@@ -28,7 +28,8 @@ class PlantType extends AbstractType
                 'multiple' => true,   // щоб повертало масив
                 'expanded' => false,  // false = select, true = checkboxes
             ])
-            ->add('height');
+            ->add('height')
+            ->add('volumeOfWaterInMLperCMofHeight');
 
     }
 
