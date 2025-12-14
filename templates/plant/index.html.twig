@@ -11,11 +11,13 @@
         <tr>
           <th>Id</th>
           <th>Name</th>
+          <th>Days till next watering</th>
           <th>Description</th>
           <th>Min watering frequency</th>
           <th>Max watering frequency</th>
-          <th>Days till next watering</th>
           <th>Fertilizers</th>
+          <th>Height (cm)</th>
+          <th>Created at</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -24,11 +26,13 @@
           <tr>
             <td>{{ plant.id }}</td>
             <td>{{ plant.name }}</td>
+            <td>{{ plant.getNextWatering }}</td>
             <td>{{ plant.description }}</td>
             <td>{{ plant.minNumberOfDaysToWater }}</td>
             <td>{{ plant.maxNumberOfDaysToWater }}</td>
-            <td>{{ plant.getNextWatering }}</td>
             <td>{{ plant.fertilizers|join(', ') }}</td>
+            <td>{{ plant.height }}</td>
+            <td>{{ plant.createdAt|date('d.m.Y') }}</td>
             <td>
               <a href="{{ path('app_plant_show', { id: plant.id }) }}">show</a>
               <a href="{{ path('app_plant_edit', { id: plant.id }) }}">edit</a>

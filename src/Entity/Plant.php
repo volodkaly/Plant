@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PlantRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PlantRepository::class)]
 class Plant
@@ -20,10 +21,14 @@ class Plant
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
+
     #[ORM\Column]
+    #[Assert\PositiveOrZero]
     private ?int $minNumberOfDaysToWater = 2;
 
     #[ORM\Column]
+    #[Assert\PositiveOrZero]
+    #[Assert\GreaterThanOrEqual(propertyPath: "minNumberOfDaysToWater", message: "The value should be greater than min number of days to water or equal")]
     private ?int $maxNumberOfDaysToWater = 20;
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
@@ -36,6 +41,7 @@ class Plant
     private ?\DateTimeImmutable $createdAt;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\PositiveOrZero]
     private ?int $height = null;
 
     public function getId(): ?int
@@ -72,7 +78,7 @@ class Plant
         return $this->minNumberOfDaysToWater;
     }
 
-    public function setMinPeriodToWater(int $minNumberOfDaysToWater): static
+    public function setMinNumberOfDaysToWater(int $minNumberOfDaysToWater): static
     {
         $this->minNumberOfDaysToWater = $minNumberOfDaysToWater;
 
@@ -83,6 +89,7 @@ class Plant
     {
         return $this->maxNumberOfDaysToWater;
     }
+
 
     public function setMaxNumberOfDaysToWater(int $maxNumberOfDaysToWater): static
     {

@@ -7,6 +7,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\HiddenField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -14,9 +16,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class UserCrudController extends AbstractCrudController
 {
     // 1. Ін'єктимо сервіс хешування паролів
-    public function __construct(
-        private UserPasswordHasherInterface $userPasswordHasher
-    ) {
+    public function __construct(private UserPasswordHasherInterface $userPasswordHasher)
+    {
     }
 
     public static function getEntityFqcn(): string
@@ -24,9 +25,27 @@ class UserCrudController extends AbstractCrudController
         return User::class;
     }
 
+    private function hashPassword($user): void
+    {
+        if (!$user instanceof User) {
+            return;
+        }
+
+        $plainPassword = $user->getPassword();
+
+        if (empty($plainPassword)) {
+            return;
+        }
+
+
+        $hashedPassword = $this->userPasswordHasher->hashPassword($user, $plainPassword);
+        $user->setPassword($hashedPassword);
+    }
+
     public function configureFields(string $pageName): iterable
     {
         return [
+            IdField::new('id')->hideOnForm(),
             TextField::new('email'),
             ArrayField::new('roles'),
             TextField::new('customRole'),
@@ -50,20 +69,5 @@ class UserCrudController extends AbstractCrudController
         parent::updateEntity($entityManager, $entityInstance);
     }
 
-    private function hashPassword($user): void
-    {
-        if (!$user instanceof User) {
-            return;
-        }
 
-        $plainPassword = $user->getPassword();
-
-        if (empty($plainPassword)) {
-            return;
-        }
-
-
-        $hashedPassword = $this->userPasswordHasher->hashPassword($user, $plainPassword);
-        $user->setPassword($hashedPassword);
-    }
 }
