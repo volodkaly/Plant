@@ -24,9 +24,15 @@ class PlantType extends AbstractType
                     'Compost' => 'Compost',
                     'Manure' => 'Manure',
                     'Organic mix' => 'Organic mix',
+                    'Biohumus' => 'Biohumus',
+                    'Bone meal' => 'Bone meal',
+                    'Fish emulsion' => 'Fish emulsion',
+                    'Seaweed (Kelp)' => 'Seaweed (Kelp)',
+                    'Superphosphate' => 'Superphosphate',
+                    'Potassium sulfate' => 'Potassium sulfate',
                 ],
-                'multiple' => true,   // щоб повертало масив
-                'expanded' => false,  // false = select, true = checkboxes
+                'multiple' => true,
+                'expanded' => false,
             ])
             ->add('height')
             ->add('volumeOfWaterInMLperCMofHeight');

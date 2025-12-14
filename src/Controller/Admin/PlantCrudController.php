@@ -8,12 +8,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\HiddenField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class PlantCrudController extends AbstractCrudController
 {
@@ -28,12 +25,12 @@ class PlantCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('name'),
-            TextField::new('getNextWatering', 'Next watering in (days):')->hideOnForm(),
+            IntegerField::new('getMaxDaysTillNextWatering', 'Next watering in max (days):')->hideOnForm(),
             TextField::new('description'),
             IntegerField::new('minNumberOfDaysToWater')->onlyOnForms(),
             IntegerField::new('maxNumberOfDaysToWater')->onlyOnForms(),
             IntegerField::new('height'),
-
+            IntegerField::new('volumeOfWaterInMLperCMofHeight', 'Volume of water in ml per cm of height'),
             ArrayField::new('fertilizers'),
             DateField::new('createdAt')->hideOnForm(),
 
