@@ -26,6 +26,7 @@ class PlantCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             TextField::new('name'),
             IntegerField::new('getMaxDaysTillNextWatering', 'Next watering in max (days):')->hideOnForm(),
+            IntegerField::new('getVolumeOfWaterInML', 'Volume of water (ml):')->hideOnForm(),
             TextField::new('description'),
             IntegerField::new('minNumberOfDaysToWater')->onlyOnForms(),
             IntegerField::new('maxNumberOfDaysToWater')->onlyOnForms(),
