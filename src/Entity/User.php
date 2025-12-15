@@ -84,6 +84,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
+        if ($this->getCustomRole() == 'editor' || $this->getCustomRole() == 'operator') {
+            $roles[] = 'ROLE_ADMIN';
+        }
+
         return array_unique($roles);
     }
 
@@ -92,7 +96,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function setRoles(array $roles): static
     {
-        $this->roles = $roles;
+
+        if ($this->getCustomRole() == 'editor' || $this->getCustomRole() == 'operator') {
+            $roles[] = 'ROLE_ADMIN';
+        }
+
+        $this->roles = array_unique($roles);
+
 
         return $this;
     }
