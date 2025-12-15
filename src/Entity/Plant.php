@@ -173,9 +173,7 @@ class Plant
 
         $minNext = (clone $last)->modify('+' . $this->getMinNumberOfDaysToWater() . ' days');
         $maxNext = (clone $last)->modify('+' . $this->getMaxNumberOfDaysToWater() . ' days');
-        if ($maxNext < $today) {
-            return 'NOW';
-        }
+
         $minDiff = max(0, $today->diff($minNext)->days);
         $maxDiff = $today->diff($maxNext)->days;
 

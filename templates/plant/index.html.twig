@@ -9,10 +9,9 @@
     <table class="table table-hover" style>
       <thead>
         <tr>
-          <th>Id</th>
           <th>Name</th>
-          <th>Days till next watering</th>
-          <th>Water volume</th>
+          <th>Days till next watering (min-max)</th>
+          <th>Water volume (ml)</th>
           <th>Last watering date</th>
           <th>Description</th>
           <th>Fertilizers</th>
@@ -23,7 +22,6 @@
       <tbody>
         {% for plant in plants %}
           <tr style="background: {{ plant.getMaxDaysTillNextWatering == 0 ? 'red' : plant.getMaxDaysTillNextWatering <= 2 ? 'orange' : 'green' }};">
-            <td style="background-color: rgba(255, 255, 255, 0.5)">{{ plant.id }}</td>
             <td style="background-color: rgba(255, 255, 255, 0.5)">{{ plant.name }}</td>
             <td style="background-color: rgba(255, 255, 255, 0.5)">{{ plant.getNextWatering }}</td>
             <td style="background-color: rgba(255, 255, 255, 0.5)">{{ plant.getVolumeOfWaterInML }}</td>

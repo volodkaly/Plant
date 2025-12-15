@@ -13,8 +13,18 @@ a {
 
 table {
   border: none;
+
+  table-layout: fixed;
+}
+
+th {
+  font-size: 14px;
+  text-align: center;
 }
 
 td {
   border: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
