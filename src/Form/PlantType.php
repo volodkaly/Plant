@@ -35,7 +35,8 @@ class PlantType extends AbstractType
                 'expanded' => false,
             ])
             ->add('height')
-            ->add('volumeOfWaterInMLperCMofHeight', TextType::class, ['label' => 'Volume of water in ml per cm of height']);
+            ->add('volumeOfWaterInMLperCMofHeight', TextType::class, ['label' => 'Volume of water in ml per cm of height'])
+            ->add('lastWateringDate');
 
     }
 

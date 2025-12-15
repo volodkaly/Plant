@@ -179,6 +179,10 @@ class Plant
         $minDiff = max(0, $today->diff($minNext)->days);
         $maxDiff = $today->diff($maxNext)->days;
 
+        if ($minDiff == $maxDiff) {
+            return "$minDiff";
+        }
+
         return "$minDiff - $maxDiff";
     }
 
