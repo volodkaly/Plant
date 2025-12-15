@@ -43,5 +43,12 @@
     </table>
   </div>
 
+  {% if page > 1 %}
+    <a href="{{ path('app_plant_index', { page: page - 1 }) }}">prev</a>
+  {% endif %}
+  {% if plants %}
+    <a href="{{ path('app_plant_index', { page: page + 1 }) }}">next</a>
+  {% endif %}
+
   <a href="{{ path('app_plant_new') }}" class="btn btn-primary ms-4">Create new</a>
 {% endblock %}

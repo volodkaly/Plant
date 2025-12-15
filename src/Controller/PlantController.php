@@ -17,10 +17,21 @@ use Symfony\Component\Routing\Attribute\Route;
 final class PlantController extends AbstractController
 {
     #[Route(name: 'app_plant_index', methods: ['GET'])]
-    public function index(PlantRepository $plantRepository): Response
+    public function index(PlantRepository $plantRepository, Request $request, EntityManagerInterface $em): Response
     {
+        $page = $request->query->getInt('page', 1);
+
+        $plants = $em->createQueryBuilder()
+            ->select('plants')
+            ->from(Plant::class, 'plants')
+            ->setFirstResult(10 * $page - 10)
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+
         return $this->render('plant/index.html.twig', [
-            'plants' => $plantRepository->findAll(),
+            'plants' => $plants,
+            'page' => $page
         ]);
     }
 
