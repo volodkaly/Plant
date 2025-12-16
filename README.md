@@ -15,3 +15,5 @@ The main goal is to remind to water each plant intime
 -   Doctrine
 -   EasyAdmin
 -   MySQL
+
+![alt text](image.png)
