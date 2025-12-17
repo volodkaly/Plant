@@ -22,20 +22,16 @@
           <td>{{ plant.getNextWatering }}</td>
         </tr>
         <tr>
+          <th>Volume of water in ml</th>
+          <td>{{ plant.volumeOfWaterInML }}</td>
+        </tr>
+        <tr>
           <th>Date of last watering</th>
           <td>{{ plant.lastWateringDate|date('d.m.Y') }}</td>
         </tr>
         <tr>
           <th>Description</th>
           <td>{{ plant.description }}</td>
-        </tr>
-        <tr>
-          <th>MinNumberOfDaysToWater</th>
-          <td>{{ plant.minNumberOfDaysToWater }}</td>
-        </tr>
-        <tr>
-          <th>MaxNumberOfDaysToWater</th>
-          <td>{{ plant.maxNumberOfDaysToWater }}</td>
         </tr>
         <tr>
           <th>Fertilizers</th>
